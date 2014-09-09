@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.oa.bean">
+
+	<class name="DocPrivateInfo" table="oa_docprivateinfo">
+		<id name="id" type="long" column="id">
+			<generator class="native"/>
+		</id>
+		<property name="name"  type="java.lang.String"/>
+		<property name="path" type="java.lang.String"/>
+		<property name="type" type="java.lang.String"/>
+		<property name="createTime" type="timestamp"/>
+		<property name="userId" type="long"/>
+		<property name="userName" type="java.lang.String"/>
+		
+		<!-- 在一的一方要设置set，和PO里的Set集合相对应，外键就是一方的id 
+  
+<many-to-one name="user" class="User" column="userId" cascade="none"></many-to-one>
+	-->		
+	</class>
+</hibernate-mapping>

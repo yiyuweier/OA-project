@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>贵州省乡镇协同办公平台</title>
+<link href="jqeasyui/themes/icon.css" rel="stylesheet" type="text/css" />
+<link href="jqeasyui/themes/default/easyui.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="jqeasyui/jquery.js"></script>
+<script type="text/javascript" src="jqeasyui/jquery.easyui.js"></script>
+<script type="text/javascript" src="jqeasyui/locale/easyui-lang-zh_CN.js" ></script>
+<script type="text/javascript" src="resource/js/code.js" ></script>
+<link href="css/login.css" rel="stylesheet" type="text/css" />
+<link href="resource/css/code.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="uijs/login.js"></script>
+</style>
+</head>
+<body onload="createCode();">
+<div style="width:100%; margin-top:150px; background-image:url(images/loginbg3.png); height:280px;">
+  <div style="width:600px; margin:auto;">
+    <div style=" width:276px; height:140px; float:left; padding-top:50px; "> <img src="images/LOGO.png" /> </div>
+    <div style="width:320px; margin:auto; padding-top:50px; float:right;">
+      <div id="loginPanel"   class="easyui-panel" style="padding:25px; background:#f9f9f9;width:320px;"  data-options="iconCls:'icon-user' "   border="0">
+        <form id="FmLogin" method="post">
+          <table cellpadding="0" cellspacing="0" border="0" width="280">
+            <tr>
+              <td class="left">用户号：</td>
+              <td><input type="text" class="easyui-validatebox"  name="loginId" data-options="required:true"/>
+              </td>
+            </tr>
+            <tr>
+              <td class="left">密&nbsp;&nbsp;码：</td>
+              <td><input type="password" class="easyui-validatebox"  name="password" data-options="required:true"/></td>
+            </tr>
+            <tr>
+              <td class="left">验证码：</td>
+              <td valign="top">
+              	<input type="text" id="sessionCode" class=" easyui-validatebox"   name="sessionCode" data-options="required:true"/>
+              	<input type="text" id="checkCode" class="code" style="width: 55px" /> <a href="#" onclick="createCode()">看不清楚</a> 
+              </td>
+            </tr>
+            <tr>
+              <td  colspan="2" class="btnSubmit"><a class="easyui-linkbutton" iconCls="icon-ok" href="#" onclick="LoginFmSubmit();">登陆</a> <a class="easyui-linkbutton" iconCls="icon-cancel" href="#"  onclick="LoginFmCancel();" >重置</a> </td>
+            </tr>
+          </table>
+        </form>
+      </div>
+    </div>
+  </div>
+ 
+</div> <div style="width:600px;margin:auto; margin-top:20px; clear:both;color:#fff; text-align:center; font-size:13px;">贵州省乡镇单位协同办公平台 @copy Right 2013-2015</div>
+</body>
+</html>
+<script>
+	//$("#sessionCode").keypress(function (e){ 
+	//	var code = event.keyCode; 
+	//	if (13 == code) { 
+	//		LoginFmSubmit();
+	//	} 
+	//}); 
+	function LoginFmSubmit(){
+		var istrue = validate();
+		if(istrue){
+			$('#FmLogin').form('submit',{
+			url:'LoginServlet_Login',
+			success:function(data){
+				var data=eval('('+data+')');
+	            if(data.success){
+	                window.location=data.data.url;
+	            }else
+	                $.messager.alert('系统提示',data.errorMsg);
+			}
+		})
+		}
+		
+	}
+	
+</script>

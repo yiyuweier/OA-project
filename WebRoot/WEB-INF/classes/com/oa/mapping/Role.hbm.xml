@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.oa.bean">
+
+	<class name="Role" table="oa_role">
+		<id name="id" type="long">
+			<generator class="native"/>
+		</id>
+		<property name="R_name"/>	
+		<property name="R_description"/>
+		
+		<!-- users属性，Role与User的多对多关系 -->
+		<set name="users" table="oa_role_user" lazy="false">
+			<key column="roleId"></key>
+			<many-to-many class="User" column="userId"></many-to-many>
+		</set>
+		
+		<!-- privileges属性，本类与Privilege的多对多关系 -->
+		<set name="privileges" table="oa_role_privilege" lazy="false">
+			<key column="roleId"></key>
+			<many-to-many class="Privilege" column="privilegeId"></many-to-many>
+		</set>
+	</class>
+
+</hibernate-mapping>
+

@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.oa.bean">
+
+	<class name="MeetingInfo" table="oa_meetinginfo">
+		<id name="id" type="long" column="id">
+			<generator class="native"/>
+		</id>
+		<property name="name"  type="java.lang.String">
+		  <column name="name" length="200"></column>
+		  </property>
+		<property name="startTime" type="timestamp"/>	
+		<property name="endTime" type="timestamp"/>
+		<property name="userId" type="long"/>	
+		<property name="infoCreateTime" type="timestamp"/>	
+		<!--<property name="meeting_room_id" type="long"/>	-->
+		
+		
+		<!-- 多的一方设置<many-to-one> -->
+  <many-to-one name="meetingRoom" class="MeetingRoom" column="meetingRoomId" cascade="none"></many-to-one>
+		
+	</class>
+</hibernate-mapping>
+

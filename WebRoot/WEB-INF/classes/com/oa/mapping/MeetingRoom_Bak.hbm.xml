@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.oa.bean">
+
+	<class name="MeetingRoomBak" table="oa_meetingroombak">
+		<id name="id" type="long" column="id">
+			<generator class="native"/>
+		</id>
+		<property name="name"  type="java.lang.String"/>
+		<property name="people" type="java.lang.Integer"/>
+		<property name="roomAddress"  type="java.lang.String"/>
+		<property name="state"  type="java.lang.Integer" />
+		<property name="roomCreateTime" type="timestamp"/>	
+		
+		
+		<!-- 在一的一方要设置set，和PO里的Set集合相对应，外键就是一方的id -->
+  <set name="meetingInfoBaks" cascade="all" inverse="false">
+   <key column="meetingRoomId"></key>
+   <one-to-many class="MeetingInfoBak"/>
+  </set>
+		
+			
+	</class>
+</hibernate-mapping>

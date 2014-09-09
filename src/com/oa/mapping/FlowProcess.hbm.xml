@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.oa.bean">
+
+	<class name="FlowProcess" table="oa_flowprocess">
+		<id name="id" type="long">
+			<generator class="native"/>
+		</id>
+		<property name="F_id"/>
+		<property name="F_name"/>
+		<property name="F_desc"/>
+		
+		<!-- flowcategory属性，本类与FlowCategory的多对一关系 -->
+		<many-to-one name="flowcategory" column="flowcategoryId"></many-to-one>	
+		
+		<property name="F_url"/>
+		<property name="F_key"/>
+	</class>
+
+</hibernate-mapping>
+

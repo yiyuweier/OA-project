@@ -1,0 +1,47 @@
+.mainTable{
+ width:100%;
+ height:100%;
+ margin:0;
+ background-color:white;
+ border:solid 1px #aaa;
+}
+.mainTable td{
+ padding:0px 0px 0px 0px;
+}
+.listTable{
+ width:100%;
+ height:100%;
+ margin:0;
+ background-color:white;
+ border:0;
+}
+.listTable td{
+ padding:0px 0px 0px 0px;
+}
+.text-inner {
+	qdisplay: block;
+	padding : 0px 1px 0px 1px;
+	overflow: hidden;
+	white-space:nowrap;
+	word-break:keep-all;
+	word-wrap:normal;
+	text-overflow: ellipsis;
+	-o-text-overflow: ellipsis;
+	font-size:12px;
+	font-family: Arial, "ËÎÌו";
+}
+a:link{
+	color:blue;
+	cursor: pointer;
+	text-decoration:none;
+	font-family: Arial, "ËÎÌו";
+}
+a:visited {
+	color:blue;
+	text-decoration: none;
+}
+a:hover{
+	color:#FF6633;
+	cursor: pointer;
+	text-decoration:none;
+}

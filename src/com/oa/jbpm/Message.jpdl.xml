@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process key="Message" name="Message" xmlns="http://jbpm.org/4.4/jpdl">
+   <start g="136,159,48,48" name="start1">
+      <transition g="-69,-22" name="to 填写消息" to="填写消息"/>
+   </start>
+   <task assignee="${begin_user}" g="257,160,92,52" name="填写消息">
+      <transition g="-72,-22" name="to foreach1" to="foreach1"/>
+   </task>
+   <task assignee="${viewUser}" g="511,165,92,52" name="查看消息">
+      <transition g="-49,-22" name="to join1" to="join1"/>
+   </task>
+   <end g="774,170,48,48" name="end1"/>
+   <foreach g="407,165,48,48" name="foreach1" var="viewUser" in="${viewUsers}">
+      <transition g="-69,-22" name="to 查看消息" to="查看消息"/>
+   </foreach>
+   <join g="667,171,48,48" name="join1" multiplicity="${viewUserssize}">
+      <transition name="to end1" to="end1" g="-50,-22"/>
+   </join>
+</process>

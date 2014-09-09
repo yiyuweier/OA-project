@@ -1,0 +1,134 @@
+<!--数据表!-->
+<table id="MeetingRoomDg">
+</table>
+<!--新增!-->
+<div id="NewMeetingRoomDlg" class="easyui-window" closed="true" resizable="false"
+    style="width: 280px; height: 250x; padding: 10px 5px;"  maximizable="false"
+    modal="true" title="新增会议室" minimizable="false" collapsible="false">
+  <form id="NewMeetingRoomFm" method="post">
+    <table>
+      <tr>
+        <td>编号：</td>
+        <td><input type="text" class="easyui-validatebox" data-options="required:true" /></td>
+      </tr>
+      <tr>
+        <td>名称：</td>
+        <td><input type="text" class="easyui-validatebox" data-options="required:true" /></td>
+      </tr>
+      <tr>
+        <td>容纳人数：</td>
+        <td><input type="text" class="easyui-validatebox" data-options="required:true" /></td>
+      </tr>
+      <tr>
+        <td>会议室地址</td>
+        <td><input type="text" class="easyui-validatebox" data-options="required:true" /></td>
+      </tr>
+      <tr>
+        <td>状态：</td>
+        <td>
+		<select class="easyui-combobox">
+			<option selected="selected">可用</option>
+			<option  >不可用</option>
+		</select>
+		</td>
+      </tr>
+      <tr>
+        <td align="center" colspan="2"><a href="#" class="easyui-linkbutton" iconcls="icon-search"  >新增</a></td>
+      </tr>
+    </table>
+  </form>
+</div>
+<!--编辑!-->
+<div id="EditMeetingRoomDlg" class="easyui-window" closed="true" resizable="false"
+    style="width: 280px; height: 250px; padding: 10px 5px;"  maximizable="false"
+    modal="true" title="编辑会议室" minimizable="false" collapsible="false">
+  <form id="EditMeetingRoomFm" method="post">
+    <table>
+      <tr>
+        <td>编号：</td>
+        <td><input type="text"  name="id" class="easyui-validatebox" data-options="required:true" /></td>
+      </tr>
+      <tr>
+        <td>名称：</td>
+        <td><input type="text" name="name" class="easyui-validatebox" data-options="required:true" /></td>
+      </tr>
+      <tr>
+        <td>容纳人数：</td>
+        <td><input type="text" name="count" class="easyui-validatebox" data-options="required:true" /></td>
+      </tr>
+      <tr>
+        <td>会议室地址</td>
+        <td><input type="text"  name="address"class="easyui-validatebox" data-options="required:true" /></td>
+      </tr>
+      <tr>
+        <td>状态：</td>
+        <td><input type="text" name="state" class="easyui-validatebox" data-options="required:true" /></td>
+      </tr>
+      <tr>
+        <td style="text-align:center;" colspan="2"><a href="#" class="easyui-linkbutton" iconcls="icon-ok"  >编辑</a></td>
+      </tr>
+    </table>
+  </form>
+</div>
+<script type="text/javascript">
+$(function(){
+	$('#MeetingRoomDg').datagrid({
+		url:'data/meetingroom.json',
+		fit:true,
+		columns:[[
+			{field:'ck',title:'选择',width:40,checkbox:true},
+			{field:'id',title:'编号',width:40},
+			{field:'name',title:'名称',width:100},
+			{field:'count',title:'人数',width:40},
+			{field:'address',title:'会议室地址',width:200},
+			{field:'state',title:'状态',width:60}
+		]],
+		fitColumns:true,
+		loadMsg:'数据加载中请稍后……',  
+		rownumbers: true,               
+		striped: true, 
+		pagination:true,
+		method:"post",
+		title:"会议室管理",
+		toolbar:[
+			{
+				text:'新增',
+				iconCls:'icon-add',
+				handler:showNewMeetingRoomDlg 
+			},
+			{
+				text:'编辑',
+				iconCls:'icon-edit',
+				handler:showEditMeetingRoomDlg 
+			},{
+				text:'删除',
+				iconCls:'icon-remove'
+			},{
+				text:'历史记录',
+				iconCls:'icon-book'
+			}
+		]
+	});
+	var p = $('#MeetingRoomDg').datagrid('getPager');  
+	$(p).pagination({  
+		pageSize: 10,//每页显示的记录条数，默认为10  
+		pageList: [5,10,20,99],//可以设置每页记录条数的列表  
+		beforePageText: '第',//页数文本框前显示的汉字  
+		afterPageText: '页    共 {pages} 页',  
+		displayMsg: '当前显示 {from} - {to} 条记录   共 {total} 条记录' 
+	});
+});
+//新增对话框显示
+function showNewMeetingRoomDlg(){
+	$('#NewMeetingRoomDlg').window('open');
+}
+//编辑对话框显示
+function showEditMeetingRoomDlg(){
+	var row=$('#MeetingRoomDg').datagrid('getSelected');
+	if(row){ 
+		$('EditMeetingRoomFm').form('load',row);
+		$('#EditMeetingRoomDlg').window('open');
+	}else
+		$.messager.alert('系统提示','请选择编辑的行');
+}
+</script>

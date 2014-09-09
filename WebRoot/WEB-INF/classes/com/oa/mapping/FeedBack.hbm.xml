@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.oa.bean">
+
+	<class name="FeedBackInfo" table="oa_Feedback">
+		<id name="id" type="long">
+			<generator class="native"/>
+		</id>
+		<property name="feedbackinfo" type="text"/>	
+		<property name="userid"/>
+		<property name="date"/>
+		
+			
+	</class>
+
+</hibernate-mapping>
+

@@ -1,0 +1,100 @@
+body {
+	font-family: "宋体";
+	font-size: 12px;
+	margin: 0px;
+	padding: 0px;
+	background-color: #FFFFFF;
+	text-decoration: none;
+    scrollbar-3dlight-color:#CCCCCC;
+    scrollbar-arrow-color:#ffffff;
+    scrollbar-darkshadow-color:#CCCCCC;
+    scrollbar-face-color:#CCCCCC;
+    scrollbar-highlight-color:#f0f0f0;
+    scrollbar-shadow-color:#CCCCCC;
+}
+.login_table_footer {
+	height: 30px;
+	width: 100%;
+	background-color: #FFFFFF;
+	text-align: center;
+}
+.gray {
+	font-family: Arial, "宋体";
+	font-size: 12px;
+	font-weight: bold;
+	color: #5F5F5F;
+	line-height: 22px;
+}
+
+.red {
+	font-family: Arial, "宋体";
+	font-size: 12px;
+	font-weight: bold;
+	color: #C8010B;
+}
+
+.redlogin {
+	font-family: Arial, "宋体";
+	font-size: 14px;
+	font-weight: bold;
+	color: #C8010B;
+}
+.black {
+	font-family: Arial, "宋体";
+	font-size: 12px;
+	font-weight: bold;
+	color: #000000;
+}
+.black1{
+	font-family: "宋体";
+	font-size: 12px;
+	color: #000000;
+}
+a.black:hover {
+	color: #C8010B;
+	text-decoration: none;
+}
+a.gray:hover {
+	color: #C8010B;
+	text-decoration: none;
+}
+a {
+	text-decoration: none;
+}
+
+.line_table {
+	height: 6px;
+	width: 100%;
+	background-image: url(../image/2lingbg.gif);
+}
+ 
+ .loginbutton{ display:inline-block; padding:1px 12px; text-decoration:none; color: #333 !important; cursor:pointer; border: solid 1px #999;background: #DDD; filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FFFFFF', endColorstr='#DDDDDD');
+background: linear-gradient(top, #FFF, #DDD); background: -moz-linear-gradient(top, #FFF, #DDD); background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFF), to(#DDD)); text-shadow: 0px 1px 1px rgba(255, 255, 255, 1); box-shadow: 0 1px 0 rgba(255, 255, 255, .2), 0 -1px 0 rgba(0, 0, 0, .09); -moz-transition:-moz-box-shadow linear .2s;
+-webkit-transition: -webkit-box-shadow linear .2s;
+transition: box-shadow linear .2s;
+white-space: nowrap; }
+.loginbutton:focus{ outline:none 0; border-color:#426DC9; box-shadow:0 0 8px rgba(66, 109, 201, .9); }
+.loginbutton:hover{ color:#000; border-color:#666; }
+.loginbutton:active{ border-color:#666; filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#DDDDDD', endColorstr='#FFFFFF');
+background: linear-gradient(top, #DDD, #FFF); background: -moz-linear-gradient(top, #DDD, #FFF); background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#DDD), to(#FFF)); box-shadow:inset 0 1px 5px rgba(66, 109, 201, .9), inset 0 1px 1em rgba(0, 0, 0, .3); }
+.loginbutton[disabled] { cursor:default; color:#666; background:#DDD; border: 1px solid #999; filter:alpha(opacity=50); opacity:.5; box-shadow:none; }
+.center{margin:0 auto;}
+.loginform{height:370px;background:#FFFFFF;width:680px;overflow:hidden; border:1px solid #000000;padding:10px;}
+.loginTitleBg{
+  FILTER: progid:DXImageTransform.Microsoft.Gradient(gradientType=0,startColorStr=ghostwhite,endColorStr=silver);
+  background:-moz-linear-gradient(top, ghostwhite, silver);
+  background:-webkit-gradient(linear, 0 0, 0 bottom, from(ghostwhite), to(silver));
+  background:-o-linear-gradient(top, ghostwhite, silver);
+  border:solid 1px silver;
+ }
+ .loginLabel{
+  width:90px;
+  text-align:right;
+ }
+ .loginInput{
+   height:16px;
+   width:180px;
+   font-size:10px;
+   font-family:simsun, serif;
+   font-weight:bold;
+ }

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process key="AskForLeave" name="请假" xmlns="http://jbpm.org/4.4/jpdl">
+   <swimlane assignee="${begin_user}" name="begin_user"/>
+   <start g="20,265,48,48" name="start1">
+      <transition g="-81,-22" name="to 填写请假条" to="填写请假条"/>
+   </start>
+   <task g="132,265,92,52" name="填写请假条" swimlane="begin_user">
+      <transition g="-93,-22" name="to 部门领导审批" to="部门领导审批"/>
+   </task>
+   <task assignee="${process_user}" g="284,267,92,52" name="部门领导审批">
+
+	  <transition g="-79,-22" name="to exclusive1" to="exclusive1"/>
+   </task>
+   <task g="594,260,92,52" name="销假" swimlane="begin_user">
+	  <transition g="-50,-22" name="to end1" to="end1"/>
+   </task>
+   
+   <decision g="416,270,48,48" name="exclusive1">
+   
+	  <handler class="com.oa.jbpm.decision.AskForLeaveDecisionHanderForexclusive1" />
+      
+	  <transition g="-45,-22" name="to 销假" to="销假"/>
+      <transition g="-69,-22" name="to 查看结果" to="请假没通过"/>
+   
+	</decision>
+   
+	<end g="617,122,48,48" name="end1"/>
+   <task g="464,169,92,52" name="请假没通过" swimlane="begin_user">
+      <transition g="-50,-22" name="to end1" to="end1"/>
+   </task>
+</process>

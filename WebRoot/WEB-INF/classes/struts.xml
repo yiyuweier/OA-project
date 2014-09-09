@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.1//EN" "http://struts.apache.org/dtds/struts-2.1.dtd">
+<struts>
+
+	<!-- 配置为开发者模式 -->
+	<constant name="struts.devMode" value="true"/>
+	
+	<!-- 配置扩展名为action -->
+	<constant name="struts。action。extension" value="action"/>
+	
+	<!-- 把主题配置为sample-->
+	<constant name="struts。ui.theme" value="sample"/>
+	
+	<constant name="struts.action.excludePattern" value="/jsp/ckfinder/.*"/>
+	<!-- 
+	<constant name="struts.action.excludePattern" value="/servlet/.*"/>
+	 -->
+	 
+	 <constant name="struts.action.excludePattern" value="/conn"/>
+	 
+	 
+	<!-- 控制上传文件大小 -->
+	<constant name="struts.multipart.maxSize" value="1000000000000" />
+
+
+	<package namespace="/" name="default" extends="struts-default">
+		
+		<!-- 配置自定义拦截器LoginedCheckInterceptor -->
+		<interceptors>
+			<interceptor name="Myinterceptor" class="com.oa.interceptor.Myinterceptor"></interceptor>
+			<interceptor-stack name="myinterceptor">
+                <interceptor-ref name="Myinterceptor" />
+                <interceptor-ref name="defaultStack" />
+            </interceptor-stack>
+		</interceptors>
+		
+		<!-- 定义全局result -->
+        <global-results>
+            <!-- 定义名为exception的全局result -->
+            <result name="exception">exception.jsp</result>
+            <result name="tologin">/login.html</result>
+        </global-results>
+	
+	
+		<!-- 登陆action -->
+		<action name="loginaction_*" class="com.oa.action.login.login_action" method="{1}">
+			<result name="login_success">/MyIndex.jsp</result>
+			<result name="error">/login.jsp</result>
+			<result name="login">/login.jsp</result>
+			<interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+		
+		<!-- 岗位action -->
+		<action name="Role_*" class="com.oa.action.sysmanage.Role_action" method="{1}">
+			<result name="addUI">/jsp/SysManage/RoleManage/addUI.jsp</result>
+			<result name="list">/jsp/SysManage/RoleManage/list.jsp</result>
+			<result name="editUI">/jsp/SysManage/RoleManage/editUI.jsp</result>
+			<result name="privilegeUI">/jsp/SysManage/RoleManage/privilegeUI.jsp</result>
+			<result name="tolist" type="redirectAction">Role_list</result>
+			<interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+		
+		<!-- 部门action -->
+		<action name="Department_*" class="com.oa.action.sysmanage.Department_action" method="{1}">
+			<result name="addUI">/jsp/SysManage/DepartmentManage/addUI.jsp</result>
+			<result name="list">/jsp/SysManage/DepartmentManage/list.jsp</result>
+			<result name="editUI">/jsp/SysManage/DepartmentManage/editUI.jsp</result>
+			<result name="tolist" type="redirectAction">
+				<param name="actionName">Department_list</param>
+                <param name="parentId">${parentId}</param>
+			</result>
+			<interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+		
+		<!-- 用户action -->
+		<action name="User_*" class="com.oa.action.sysmanage.User_action" method="{1}">
+			<result name="addUI">/jsp/SysManage/UserManage/addUI.jsp</result>
+			<result name="list">/jsp/SysManage/UserManage/list.jsp</result>
+			<result name="editUI">/jsp/SysManage/UserManage/editUI.jsp</result>
+			<result name="tolist" type="redirectAction">User_list</result>
+			<interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+		
+		<!-- 流程管理action -->
+		<action name="Flow_*" class="com.oa.action.sysmanage.Flowdeploy_action" method="{1}">
+			<result name="list">/jsp/SysManage/FlowManage/list.jsp</result>
+			<result name="tolist" type="redirectAction">Flow_list</result>
+			<result name="addCategoryUI">/jsp/SysManage/FlowManage/addCategoryUI.jsp</result>
+			<result name="FlowdeployUI">/jsp/SysManage/FlowManage/FlowdeployUI.jsp</result>
+			<interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+		
+		<!-- 上传流程zip文件action -->
+		<action name="UploadFlowZip_action" class="com.oa.action.file.UploadFlowZip_action">
+			<result name="success">/jsp/flow/deploysuccess.jsp</result>
+			<interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+		
+		<!-- 流程部署action -->
+		<action name="Jbpm_*" class="com.oa.action.jbpm.Jbpm_action" method="{1}">
+			<result name="deploy">/jsp/jbpm/jbpmdeploy.jsp</result>
+			<result name="deploysuccessful">/jsp/jbpm/deploysuccessful.jsp</result>
+			<result name="qingjiasuccessful">/jsp/qingjia/qingjiasuccessful.jsp</result>
+			<result name="checkalltasks">/jsp/jbpm/alltasks.jsp</result>
+			<result name="detailtask_forAskForLeave">/jsp/jbpm/detailtask_forAskForLeave.jsp</result>
+			<result name="detailtask_forNotAskForLeave">/jsp/jbpm/detailtask_forNotAskForLeave.jsp</result>
+			<result name="cancel_AskForLeave">/jsp/jbpm/cancel_AskForLeave.jsp</result>
+			<result name="detailtask_forMessage">/jsp/jbpm/detailtask_forMessage.jsp</result>
+			<result name="detailtask_forDocument">/jsp/jbpm/detailtask_forDocument.jsp</result>
+			<result name="gothought_forDocument">/jsp/jbpm/gothought_forDocument.jsp</result>
+			<result name="issued_document">/jsp/jbpm/issued_document.jsp</result>
+			<result name="result_forDocument">/jsp/jbpm/result_forDocument.jsp</result>
+			<result name="result_forsuggest">/jsp/jbpm/result_forsuggest.jsp</result>
+			<result name="Notgothoughsuccessful">/jsp/jbpm/Notgothoughtsuccessful.jsp</result>
+			<result name="gothoughsuccessful">/jsp/jbpm/gothoughtsuccessful.jsp</result>
+			<interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+		
+		<!-- 请假action -->
+		<action name="Qingjia_*" class="com.oa.action.qingjia_action" method="{1}">
+			<result name="tianxieqingjiatiao">/jsp/qingjia/tianxieqingjiatiao.jsp</result>
+			<result name="newshiwu">/jsp/collaborate/approve/new/index.jsp</result>
+			<interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+		
+		<!-- zTree的异步加载部门树 -->
+		<action name="zTreeJson_action" class="com.oa.action.util.zTreeJson_action">
+			<result name="success">/jsp/js/selectemp/selectempforcollaborate1.jsp</result>
+			<interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+		<!-- 异步加载部门人员  -->
+		<action name="GetUsers_*" class="com.oa.action.util.GetUsersFromDarpId_action" method="{1}">
+			<result name="success">/jsp/flow/Document.jsp</result>
+			<interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+		
+		
+		<!-- 显示现有流程列表 -->
+		<action name="show_flowcategory" class="com.oa.action.flow.workplaceFlowCategory_action">
+			<result name="success">/jsp/flow/workspace-home.jsp</result>
+			<interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+		
+		<!-- 发起新的流程 -->
+		<action name="workplace_*" class="com.oa.action.flow.workplaceNewFlow_action" method="{1}">
+			<result name="success">/jsp/flow/${url}</result>
+			<result name="cancelSuccessful">/jsp/jbpm/cancelSuccessful.jsp</result>
+			<interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+		
+		<!-- 查看流程图片 -->
+		<action name="ShowFlowImage_*" class="com.oa.action.flow.workplaceShowFlowImage_action" method="{1}">
+			<result name="success">/jsp/jbpm/ShowImageJsp.jsp</result>
+			<interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+		
+		<!-- 部署流程 -->
+		<action name="startProcessInstance_*" class="com.oa.action.flow.workplaceStartProcessInstance_action" method="{1}">
+			<result name="success">/jsp/flow/deploysuccess.jsp</result>
+			<interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+		
+		<!-- 运行的流程 -->
+		<action name="RunningProcessInstance" class="com.oa.action.flow.workplaceRunningProcessInstance_action">
+			<result name="success">/jsp/flow/workspace-listRunningProcessInstance.jsp</result>
+			<interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+		
+		<!-- 收件箱  -->
+		<action name="msg_info_listReceive" class="com.oa.action.flow.msg_info_listReceived_action">
+			<result name="success">/jsp/flow/msg-info-list.jsp</result>
+			<interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+		
+		<!-- 会签意见查看 -->
+		<action name="viewResultForDocument" class="com.oa.action.flow.viewResultForDocument_action">
+			<result name="success">/jsp/jbpm/viewed.jsp</result>
+			<interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+		
+		<!-- 修改并重新发送审批 -->
+		<action name="DocumentForeditor" class="com.oa.action.flow.DocumentForeditor_action">
+			<result name="success">/jsp/flow/DocumentForeditor.jsp</result>
+			<interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+		
+		<!-- 选择请假流程的审批人 -->
+		<!-- 
+		<action name="selectAskForLeave" class="com.oa.action.util.selectAskForLeave_action">
+			<result name="success">/jsp/flow/AskForLeave.jsp</result>
+			<interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+		 -->
+		 
+		 <!-- 异步加载消息数目 -->
+		 <action name="GetTaskNumber" class="com.oa.action.ajax.GetTaskNumber_action">
+		 	<result name="success">/MyIndex.jsp</result>
+		 	<interceptor-ref name="myinterceptor"></interceptor-ref>
+		 </action>
+		 
+		 <!-- 首页中显示各种常用数据dashboard  -->
+		 <action name="Dashboard" class="com.oa.action.login.Dashboard_action">
+		 	<result name="checkalltasks">/dashboard.jsp</result>
+		 	<interceptor-ref name="myinterceptor"></interceptor-ref>
+		 </action>
+		 
+		 <!-- 显示我的流程的详细信息   -->
+		 <action name="getMyFlowDetail" class="com.oa.action.flow.workplaceGetMyFlowDetail">
+		 	<result name="success">/jsp/jbpm/myFlowDetail.jsp</result>
+		 	<interceptor-ref name="myinterceptor"></interceptor-ref>
+		 </action>
+		 
+		 <!-- 获取各个项的更多的信息（more） -->
+		 <action name="GetMore_*" class="com.oa.action.util.GetMore" method="{1}">
+		 	<result name="successfordbrw">/jsp/jbpm/Alldbrw.jsp</result>
+		 	<result name="successformyflow">/jsp/jbpm/Allmyflow.jsp</result>
+		 	<result name="successforflow">/jsp/jbpm/Allflow.jsp</result>
+		 	<result name="successformessage">/jsp/jbpm/Allmessage.jsp</result>
+		 	<interceptor-ref name="myinterceptor"></interceptor-ref>
+		 </action>
+		 
+		 <!-- 发送消息 -->
+		 <action name="SendMessage" class="com.oa.comet4j.message.SendMessage_action">
+		 	<interceptor-ref name="myinterceptor"></interceptor-ref>
+		 </action>
+		 
+		 <!-- 查看通知公告的详细信息 -->
+		 <action name="GetDetailMessage" class="com.oa.action.flow.GetDetailMessage_action">
+		 	<result name="success">jsp/jbpm/detailtask_forMessage1.jsp</result>
+		 	<interceptor-ref name="myinterceptor"></interceptor-ref>
+		 </action>
+		 
+		 
+		 <!-- ***************************************************************** -->
+		 <!-- 手机端 -->
+		 <!-- 登陆 -->
+		 <action name="LoginServlet_*" class="com.oa.action.andirod.login.LoginServlet" method="{1}">
+		 	<result name="login">/login.html</result>
+		 	<interceptor-ref name="myinterceptor"></interceptor-ref>
+		 </action>
+		 
+		 <!-- 系统管理 -->
+		 <!-- 岗位 -->
+		 <action name="RoleServlet_*" class="com.oa.action.andirod.system.RoleServlet" method="{1}">
+		 	<result name="roleManage">./jsp/SystemManage/PostionManage.jsp</result>
+		 	<result name="privilegeUI">/jsp/SystemManage/privilegeUI.jsp</result>
+		 	<interceptor-ref name="myinterceptor"></interceptor-ref>
+		 </action>
+		 <!-- 部门 -->
+		 <action name="DepartmentServlet_*" class="com.oa.action.andirod.system.DepartmentServlet" method="{1}">
+		 	<result name="DepartmentManage">/jsp/SystemManage/DepartmentManage.jsp</result>
+		 	<interceptor-ref name="myinterceptor"></interceptor-ref>
+		 </action>
+		 <!-- 用户 -->
+		 <action name="UserServlet_*" class="com.oa.action.andirod.system.UserServlet" method="{1}">
+		 	<result name="UserManage">/jsp/SystemManage/UserManage.jsp</result>
+		 	<interceptor-ref name="myinterceptor"></interceptor-ref>
+		 </action>
+		 <!-- 流程 -->
+		 <action name="FlowDeployServlet_*" class="com.oa.action.andirod.system.FlowdeployServlet" method="{1}">
+		 	<result name="FlowManageUI">/jsp/SystemManage/FlowManage.jsp</result>
+		 	<interceptor-ref name="myinterceptor"></interceptor-ref>
+		 </action>
+		 <!-- 部署流程 -->
+		 <action name="UploadFlowZipServlet" class="com.oa.action.andirod.uploadZipfile.UploadFlowZipServlet">
+		 	<interceptor-ref name="myinterceptor"></interceptor-ref>
+		 </action>
+		 
+		 <!-- 常用流程 -->
+		 <action name="workplaceStartProcessInstanceServlet_*" class="com.oa.action.andirod.flow.workplaceStartProcessInstanceServlet" method="{1}">
+		 	<interceptor-ref name="myinterceptor"></interceptor-ref>
+		 </action>
+		 
+		 <!-- 发起新的流程 -->
+		 <action name="workplaceNewFlowServlet_*" class="com.oa.action.andirod.flow.workplaceNewFlowServlet" method="{1}">
+		 	<interceptor-ref name="myinterceptor"></interceptor-ref>
+		 </action>
+		 
+		 <!-- 待办任务 -->
+		 <action name="DashboardDbrwServlet_*" class="com.oa.action.andirod.login.DashboardDbrwServlet" method="{1}">
+		 	<interceptor-ref name="myinterceptor"></interceptor-ref>
+		 </action>
+		 <!-- 我的流程  -->
+		 <action name="DashboardMyflowServlet_*" class="com.oa.action.andirod.login.DashboardMyflowServlet" method="{1}">
+		 	<interceptor-ref name="myinterceptor"></interceptor-ref>
+		 </action>
+		 <!-- 我的流程详情  -->
+		 <action name="getMyFlowDetailServlet" class="com.oa.action.andirod.flow.workplaceGetMyFlowDetailServlet">
+		 	<interceptor-ref name="myinterceptor"></interceptor-ref>
+		 </action>
+		 <!-- 常用流程 -->
+		 <action name="DashboardFlowServlet_*" class="com.oa.action.andirod.login.DashboardFlowServlet" method="{1}">
+		 	<interceptor-ref name="myinterceptor"></interceptor-ref>
+		 </action>
+		 <!-- 通知公告 -->
+		 <action name="DashboardAnnouncementsServlet_*" class="com.oa.action.andirod.login.DashboardAnnouncementsServlet" method="{1}">
+		 	<interceptor-ref name="myinterceptor"></interceptor-ref>
+		 </action>
+		 <!-- 发起流程 -->
+		 <action name="workplaceServlet_*" class="com.oa.action.andirod.flow.workplaceStartProcessInstanceServlet" method="{1}">
+		 	<interceptor-ref name="myinterceptor"></interceptor-ref>
+		 </action>
+		 <!-- 处理流程相关 -->
+		 <action name="JbpmServlet_*" class="com.oa.action.andirod.jbpm.JbpmServlet" method="{1}">
+		 	<interceptor-ref name="myinterceptor"></interceptor-ref>
+		 </action>
+		 <!-- 意见反馈 -->
+		 <action name="FeedBackServlet" class="com.oa.action.andirod.feedback.FeedBackServlet">
+		 	<interceptor-ref name="myinterceptor"></interceptor-ref>
+		 </action>
+		 <!-- ***************************************************************** -->
+		 <action name="MeetingServlet_*" class="com.oa.action.andirod.meeting.MeetingServlet" method="{1}">
+		 	<result name="MeetInfoUI">/jsp/Meeting/MeetingRoom.jsp</result>
+		 	<interceptor-ref name="myinterceptor"></interceptor-ref>
+		 </action>
+		 
+		 <action name="MeetingbookServlet_*" class="com.oa.action.andirod.meeting.MeetingbookServlet" method="{1}" >
+		        <result name="MeetingBook">/jsp/Meeting/BookMeetingRoom.jsp</result>
+		        <interceptor-ref name="myinterceptor"></interceptor-ref>
+		 </action>
+		 
+		 <action name="FileServlet_*" class="com.oa.action.andirod.file.FileServlet" method="{1}" >
+			<result name="PublicFileUI">/jsp/Document/DocumentForPublic.jsp</result>
+			<result name="PrivateFileUI">/jsp/Document/DocumentForPrivate.jsp</result>
+			<result name="FileUI">/jsp/Document/Document.jsp</result>
+			<interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+		
+		<action name="CarServlet_*" class="com.oa.action.andirod.car.CarServlet" method="{1}" >
+			<result name="CarInfoUI">/jsp/Car/CarInfo.jsp</result>
+			<interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+		
+		<action name="CarbookServlet_*" class="com.oa.action.andirod.car.CarbookServlet" method="{1}">
+			<result name="CarBookUI">/jsp/Car/BookCar.jsp</result>
+			<interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+
+
+		<!--****************************************************************************-->
+
+
+
+		 
+		 <!-- ******************************************************************************************** -->
+		 
+		 <!-- 会议室action -->
+		<action name="meetingroom_*" class="com.oa.action.meeting.meetingroom_action" method="{1}">
+			<result name="ShowIndex">/jsp/meeting/meeting-room-list1.jsp</result>
+			<result name="NewRoom">/jsp/meeting/new_meetingroom.jsp</result>
+			<result name="ShowIndex_Details">/jsp/meeting/meeting-info-list.jsp</result>
+			<result name="NewBook">/jsp/meeting/meeting-info-input.jsp</result>
+			<result name="room_history">/jsp/meeting/meeting-room-historylist.jsp</result>
+			<interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+		
+		<action name="page_*" class="com.oa.action.meeting.page_action" method="{1}">
+			<result name="info_history">/jsp/meeting/meeting-info-historylist.jsp</result>
+			<result name="room_history">/jsp/meeting/meeting-room-historylist.jsp</result>
+			<result name="userlist">/jsp/contacts/contacts-list.jsp</result>
+			<result name="Pfilelist">/jsp/doc/doc-info-public.jsp</result>
+			<result name="PrivateFileList">/jsp/doc/doc-info-private.jsp</result>
+			<result name="car_history">/jsp/car/car-historylist.jsp</result>
+			<result name="carinfo_history">/jsp/car/carInfo-historylist.jsp</result>
+			<interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+		
+		<action name="meeting_*" class="com.oa.action.meeting.meeting_action" method="{1}">
+			<result name="S_add">/jsp/meeting/meeting-room-list1.jsp</result>
+			<result name="F_add">/jsp/meeting/meeting-room-list1.jsp</result>
+			<result name="S_update">/jsp/meeting/meeting-room-list1.jsp</result>
+			<result name="F_update">/jsp/meeting/meeting-room-list1.jsp</result>
+			<result name="S_delete">/jsp/meeting/meeting-room-list1.jsp</result>
+			<result name="F_delete">/jsp/meeting/meeting-room-list1.jsp</result>
+			<result name="updateMeetingroom">/jsp/meeting/update_meetingroom.jsp</result>
+			<interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+				
+		 <action name="meetingbook_*" class="com.oa.action.meeting.meetingbook_action" method="{1}">
+			<result name="ShowIndex_Details">/jsp/meeting/meeting-info-list.jsp</result>
+			<result name="NewBook">/jsp/meeting/meeting-info-input.jsp</result>
+			<result name="S_addinfo">/jsp/meeting/meeting-info-list.jsp</result>
+			<result name="F_addinfo">/jsp/meeting/meeting-info-list.jsp</result>
+			<result name="selectbytime">/jsp/meeting/selectbytime-result.jsp</result>
+			
+			
+			<result name="select">/jsp/meeting/select-time.jsp</result>
+			<result name="user_details">/jsp/meeting/user_book.jsp</result>
+			<result name="time_error">/jsp/meeting/select-time.jsp</result>		
+			<result name="time_error1">/jsp/meeting/meeting-info-input.jsp</result>
+			
+			<result name="time_error_add">/jsp/meeting/meeting-info-input.jsp</result>
+			<result name="history_list">/jsp/meeting/meeting-info-historylist.jsp</result>
+			<interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+
+		
+		<!-- 用户action -->
+			<action name="Contact_*" class="com.oa.action.contact.Contact_action" method="{1}">
+			<result name="userlist">/jsp/contacts/contacts-list.jsp</result>
+		    <result name="selectbyname">/jsp/contacts/contacts-selectlist.jsp</result>
+		    <interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+		
+		<!--文件action -->
+		<action name="file_*" class="com.oa.action.filemanage.file_action" method="{1}">
+		<interceptor-ref name="fileUpload">
+		<param name="maximumSize">3000000000000000</param>
+		</interceptor-ref>
+		<interceptor-ref name="defaultStack"></interceptor-ref>
+		    <result name="input">/jsp/doc/doc-info-input-error.jsp</result>
+			<result name="inputfile">/jsp/doc/doc-info-input.jsp</result>
+			 
+		    <result name="upload_success" type="redirectAction">
+		    <param name="actionName">page_Pfilelist</param>
+		    </result>
+		    
+		     <result name="list">/jsp/doc/doc-info-list.jsp</result>
+		      <result name="personal">/jsp/doc/doc-info-personal.jsp</result>
+		      <result name="Psource">/jsp/doc/doc-info-public.jsp</result>
+		     <result name="privatelist">/jsp/doc/doc-info-public.jsp</result>
+		          
+		      <result name="upload_private" type="redirectAction">
+		    <param name="actionName">page_PrivateFileList</param>
+		    </result>
+		      
+		      <result name="deleteFile" type="redirectAction">
+		       <param name="actionName">page_Pfilelist</param>  
+		      </result>
+		      
+		      <result name="deletePrivateFile" type="redirectAction">
+		       <param name="actionName">page_PrivateFileList</param>  
+		      </result>
+		      
+		       <result name="findbyname">/jsp/doc/doc-info-publicSelect.jsp</result>
+		       <result name="findbyprivatename">/jsp/doc/doc-info-privateSelect.jsp</result> 
+		       <interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+		
+		<!-- 车辆管理action -->
+		<action name="car_*" class="com.oa.action.car.car_action" method="{1}">
+			<result name="showcar">/jsp/car/car-list.jsp</result>
+			<result name="S_addcar">/jsp/car/car-list.jsp</result>
+			<result name="updatecar" >/jsp/car/update-car.jsp</result>
+			<interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+		
+			
+		<action name="carInfo_*" class="com.oa.action.car.carInfo_action" method="{1}">
+			<result name="showcarinfos">/jsp/car/car-info-list.jsp</result>
+			<result name="Applyaddcarinfo">/jsp/car/car-info-input.jsp</result>
+			<result name="userCarDetails">/jsp/car/user-book-carinfo.jsp</result>
+			<result name="time_error1">/jsp/car/car-info-input.jsp</result>
+			<result name="time_error_add">/jsp/car/car-info-input.jsp</result>
+			<interceptor-ref name="myinterceptor"></interceptor-ref>
+		</action>
+	</package>
+
+</struts>    

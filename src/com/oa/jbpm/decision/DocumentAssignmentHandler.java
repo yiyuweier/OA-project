@@ -1,0 +1,139 @@
+package com.oa.jbpm.decision;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.jbpm.api.Configuration;
+import org.jbpm.api.ProcessEngine;
+import org.jbpm.api.TaskService;
+import org.jbpm.api.model.OpenExecution;
+import org.jbpm.api.task.Assignable;
+import org.jbpm.api.task.AssignmentHandler;
+import org.jbpm.api.task.Participation;
+import org.jbpm.api.task.Task;
+import org.jbpm.pvm.internal.task.OpenTask;
+import org.jbpm.pvm.internal.task.TaskImpl;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.oa.bean.Document;
+import com.oa.bean.User;
+import com.oa.dao.DocumentDao;
+import com.oa.dao.UserDao;
+import com.oa.dao.impl.DocumentDaoimpl;
+import com.oa.jbpm.operation.BaseJbpmOperation;
+import com.opensymphony.xwork2.ActionContext;
+import com.oa.jbpm.decision.BeanFactoryHelper;
+
+@Repository
+public class DocumentAssignmentHandler implements AssignmentHandler {
+
+
+	BeanFactory factory = BeanFactoryHelper.getFactory();
+	BaseJbpmOperation basejbpmoperation = (BaseJbpmOperation)factory.getBean("baseJbpmOperationimpl");
+	DocumentDao documentdao = (DocumentDao)factory.getBean("documentDaoimpl");
+	UserDao userdao = (UserDao)factory.getBean("userDaoimpl");
+	
+	List<String> participants;//参与者
+	
+	public List<String> getParticipants() {
+		return participants;
+	}
+	
+	public void setParticipants(List<String> participants) {
+		this.participants = participants;
+	}
+	
+//	@Resource
+//	BaseJbpmOperation basejbpmoperation;
+//	@Resource
+//	DocumentDao documentdao;
+	
+//	ProcessEngine processEngine=Configuration.getProcessEngine();  
+//    TaskService taskService=processEngine.getTaskService();  
+//	TaskService taskService = basejbpmoperation.getTaskService();
+
+	public void assign(Assignable assignable, OpenExecution execution) throws Exception {
+		
+//		if(basejbpmoperation==null){
+//			System.out.println("basejbpmoperation is null");
+//		}
+		TaskService taskService = basejbpmoperation.getTaskService();
+		
+		String pid = execution.getProcessInstance().getId();
+		
+		String executionId = execution.getId();
+		
+		System.out.println("pid="+pid+"************************************************");
+		System.out.println("executionId="+executionId+"********************************");
+		
+		Task task = taskService.createTaskQuery().processInstanceId(pid).activityName(execution.getName()).uniqueResult();
+		
+		
+		participants  = (List<String>) taskService.getVariable(task.getId(), "participants");
+		
+		String Document_name = (String) taskService.getVariable(task.getId(), "D_name");
+		
+		String Document_content = (String) taskService.getVariable(task.getId(), "D_content");
+//		String Document_content = (String) ActionContext.getContext().getSession().get("D_content");
+		
+		//String sendto = null;
+		
+		User user = (User) ActionContext.getContext().getSession().get("user");
+		String beginuser = user.getId().toString();
+		
+		if(participants!=null){
+			for(String participant : participants){
+//				Task subTask = ((OpenTask)task).createSubTask();
+				TaskImpl t = (TaskImpl)task;   //此处必须将task强制类型转换为TaskImpl
+				String activityName = t.getActivityName();
+                TaskImpl subTask = t.createSubTask();
+				subTask.setAssignee(participant);
+				subTask.setName(Document_name+"-会签");
+				subTask.setActivityName(activityName);
+				subTask.setExecution(execution);
+				subTask.setVariable("name", Document_name);
+				subTask.setVariable("content", Document_content);
+				taskService.addTaskParticipatingUser(task.getId(), participant, Participation.CLIENT);
+//				sendto = sendto + participant;
+				
+				
+				Document document = new Document();
+				document.setD_name(Document_name);
+				document.setD_content(Document_content);
+				
+//				User username = userdao.findById(Long.parseLong(participant));
+				document.setSendto(participant);
+				document.setSendtoName(userdao.findById(Long.parseLong(participant)).getU_name());
+				document.setInitiator(beginuser);
+				SimpleDateFormat myfmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				Date time = new Date();
+				document.setD_date(myfmt.format(time).toString());
+				document.setD_suptaskid(task.getId());
+				document.setD_taskid(subTask.getId());
+				document.setD_executionid(pid);
+				document.setIspass(2);
+				document.setType(2);
+				documentdao.save(document);
+			}
+			
+//			Document document = new Document();
+//			document.setD_name(Document_name);
+//			document.setD_content(Document_content);
+//			document.setSendto(sendto);
+//			document.setInitiator(beginuser);
+//			Date time = new Date();
+//			document.setD_date(time.toString());
+//			document.setD_taskid(task.getId());
+//			document.setD_executionid(pid);
+//			documentdao.save(document);
+		}
+
+	}
+
+}

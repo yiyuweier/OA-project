@@ -1,0 +1,27 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.oa.bean">
+
+	<class name="CarBak" table="oa_carbak">
+		<id name="id" type="long">
+			<generator class="native"/>
+		</id>
+		<property name="carName"/>
+		<property name="carStatus" type="java.lang.Integer" />
+		<property name="carPeople" type="java.lang.Integer"/>
+		<property name="code"/>		
+		<property name="driverName"/>
+		<property name="driverPhone"/>
+		<property name="carCreateTime" type="timestamp"/>
+		
+		
+		<set name="carInfoBaks" cascade="delete" inverse="true">
+   <key column="carId"></key>
+   <one-to-many class="CarInfoBak"/>
+  </set>
+	</class>
+</hibernate-mapping>
+

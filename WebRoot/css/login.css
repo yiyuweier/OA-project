@@ -1,0 +1,36 @@
+@charset "utf-8";
+/* CSS Document */
+body{
+	margin:0px;
+	background-color:#0996D2; 
+	background-repeat:repeat-y;
+	background-position:top;
+	}
+#loginPanel{ 
+	width:280px;
+	height:180px;
+	padding:5px;
+}
+.loginPanelHeader{
+ 
+}
+.left{
+	width:55px;
+	padding-right:2px;
+	text-align:right;
+}
+#sessionCode{
+	width:80px;
+}
+input{
+	width:200px;
+}
+.btnSubmit{
+	text-align:center;
+	padding-top:10px;
+}
+
+td{
+	line-height:25px;
+}
+

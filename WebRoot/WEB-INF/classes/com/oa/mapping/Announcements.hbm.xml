@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.oa.bean">
+
+	<class name="Announcements" table="oa_Announcements">
+		<id name="id" type="long">
+			<generator class="native"/>
+		</id>
+		<property name="A_name"/>	
+		<property name="A_content" type="text"/>
+		<property name="A_time"/>
+		<property name="A_FJUrl"/>
+		<property name="A_FJName"/>
+		
+			
+	</class>
+
+</hibernate-mapping>
+

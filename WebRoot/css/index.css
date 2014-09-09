@@ -1,0 +1,28 @@
+@charset "utf-8";
+ .top{
+ 	background-color:#1CAAE7;
+	height:68px;
+ }
+.easyui-accordion li{
+	padding:5px;
+	padding-left:25px;
+	line-height:25px;
+	margin:auto;
+	margin-left:5px;
+	list-style:none;
+	background-position:left;
+	background-image:url(../jqeasyui/themes/icons/sysmanagemenu.png);
+	background-repeat:no-repeat; 
+	clear:both;
+}
+.easyui-accordion li:hover{
+	color:#f00;
+	font-weight:bold;
+}
+form table{
+	border:none;
+	width:98%;
+}
+form td{
+	padding:2px;
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process key="Document" name="Document" xmlns="http://jbpm.org/4.4/jpdl">
+   <start g="140,176,48,48" name="start1">
+      <transition g="-36,-20" name="会签" to="会签"/>
+   </start>
+   <task g="269,175,92,52" name="会签">
+   	  <assignment-handler class="com.oa.jbpm.decision.DocumentAssignmentHandler"/>
+      <transition g="-13,-22" name="同意" to="办公室"/>
+      <transition g="-37,-19" name="不同意" to="审批没通过"/>
+   </task>
+   <task g="485,265,92,52" name="办公室" candidate-groups="officeGroups">
+      <transition name="下发文件" to="下发文件" g="-32,-21"/>
+   </task>
+   <end g="799,185,48,48" name="end1"/>
+   <task assignee="${begin_user}" g="482,182,92,52" name="审批没通过">
+      <transition g="528,149;313,148:-29,-22" name="会签" to="会签"/>
+      <transition g="-50,-22" name="to end1" to="end1"/>
+   </task>
+   <task name="下发文件" g="644,266,92,52">
+      <assignment-handler class="com.oa.jbpm.decision.DocumentAssignmentHandlerForIssued"/>
+      <transition name="to end1" to="end1" g="-50,-22"/>
+   </task>
+</process>

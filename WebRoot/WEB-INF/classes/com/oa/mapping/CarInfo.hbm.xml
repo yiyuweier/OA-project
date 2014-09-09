@@ -1,0 +1,24 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.oa.bean">
+
+	<class name="CarInfo" table="oa_carinfo">
+		<id name="id" type="long">
+			<generator class="native"/>
+		</id>
+		<property name="carUsage"  type="java.lang.String">
+		  <column name="carUsage" length="200"></column>
+		  </property>
+		<property name="carStartTime" type="timestamp"/>	
+		<property name="carEndTime" type="timestamp"/>
+		<property name="userId" type="long"/>	
+		<property name="carInfoCreateTime" type="timestamp"/>	
+		
+	 <many-to-one name="car" class="Car" column="carId" cascade="none"></many-to-one>
+		
+	</class>
+</hibernate-mapping>
+

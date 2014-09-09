@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+ "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+ "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+    
+    <session-factory>
+        
+        <!-- 1，数据库连接信息 -->
+		
+        <property name="dialect">
+        	org.hibernate.dialect.MySQL5InnoDBDialect
+        </property>
+        <!--
+        <property name="connection.url">jdbc:mysql:///itcastoa0720</property>
+        <property name="connection.driver_class">com.jdbc.mysql.Driver</property>
+        <property name="connection.username">root</property>
+        <property name="connection.password">101773</property>
+        -->
+        <!-- 2，其他配置 -->
+        <property name="show_sql">
+            true
+        </property>
+        <property name="hbm2ddl.auto">
+            update
+        </property>
+        <property name="javax.persistence.validation.mode">none</property>
+        <!-- 3，导入映射文件 -->
+        <mapping resource="com/oa/mapping/User.hbm.xml"/>
+        <mapping resource="com/oa/mapping/Role.hbm.xml"/>
+        <mapping resource="com/oa/mapping/Department.hbm.xml"/>
+        <mapping resource="com/oa/mapping/Privilege.hbm.xml"/>
+        
+        
+        <!-- 导入jbpm的mapping文件 -->
+         
+        <mapping resource="jbpm.repository.hbm.xml" />
+    	<mapping resource="jbpm.execution.hbm.xml" />
+    	<mapping resource="jbpm.history.hbm.xml" />
+    	<mapping resource="jbpm.task.hbm.xml" />
+    	<mapping resource="jbpm.identity.hbm.xml" />
+    	
+    	<!-- 流程类别的mapping文件 -->
+    	<mapping resource="com/oa/mapping/FlowCategory.hbm.xml"/>
+    	<mapping resource="com/oa/mapping/FlowProcess.hbm.xml"/>
+    	
+    	<!-- AskForLeave请假相关表 -->
+    	<mapping resource="com/oa/mapping/Vacate.hbm.xml"/>
+    	
+    	<!-- 站内消息相关 -->
+    	<mapping resource="com/oa/mapping/Message.hbm.xml"/>
+    	
+    	<!-- 文件审批 -->
+    	<mapping resource="com/oa/mapping/Document.hbm.xml"/>
+    	
+    	<!-- 通知公告 -->
+    	<mapping resource="com/oa/mapping/Announcements.hbm.xml"/>
+    	
+    	<!-- 意见反馈  -->
+    	<mapping resource="com/oa/mapping/FeedBack.hbm.xml"/>
+    	
+    	<!-- 会议室管理 -->
+    	<mapping resource="com/oa/mapping/MeetingRoom.hbm.xml"/>
+    	<!--会议室预定 -->
+        <mapping resource="com/oa/mapping/MeetingInfo.hbm.xml"/>
+        
+        <mapping resource="com/oa/mapping/MeetingRoom_Bak.hbm.xml"/>
+        
+        <mapping resource="com/oa/mapping/MeetingInfo_Bak.hbm.xml"/>
+        
+        <!-- 文件管理 -->
+        <mapping resource="com/oa/mapping/DocInfo.hbm.xml"/>
+        <mapping resource="com/oa/mapping/DocPrivateInfo.hbm.xml"/>
+        
+        <!-- 车辆管理 -->
+        <mapping resource="com/oa/mapping/Car.hbm.xml"/>
+        <mapping resource="com/oa/mapping/CarInfo.hbm.xml"/>
+        <mapping resource="com/oa/mapping/CarBak.hbm.xml"/>
+        <mapping resource="com/oa/mapping/CarInfoBak.hbm.xml"/>
+    </session-factory>
+    
+</hibernate-configuration>

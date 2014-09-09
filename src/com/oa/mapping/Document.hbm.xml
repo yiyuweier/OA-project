@@ -1,0 +1,32 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC 
+	"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.oa.bean">
+
+	<class name="Document" table="oa_document">
+		<id name="id" type="long">
+			<generator class="native"/>
+		</id>
+		<property name="D_name"/>	
+		<property name="D_content" type="text" length="16777216"/>
+		<property name="D_date"/>
+		<property name="sendto"/>
+		<property name="sendtoName"/>
+		<property name="initiator"/>
+		<property name="D_suggestion"/>
+		<property name="D_taskid"/>
+		<property name="D_suptaskid"/>
+		<property name="D_executionid"/>
+		<property name="ispass"/>
+		<property name="type"/>
+		<property name="D_FJUrl"/>
+		<property name="D_FJName"/>
+		
+		
+			
+	</class>
+
+</hibernate-mapping>
+

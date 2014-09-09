@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<process key="DocumentSerial" name="DocumentSerial" xmlns="http://jbpm.org/4.4/jpdl">
+   <start g="91,206,48,48" name="start1">
+      <transition g="-45,-22" name="to 会签" to="会签"/>
+   </start>
+   <task assignee="${SerialPeople}" g="278,206,92,52" name="${taskname}">
+      <transition g="-79,-22" name="to exclusive1" to="exclusive1"/>
+   </task>
+   <decision g="475,211,48,48" name="exclusive1">
+   <handler class="com.oa.jbpm.decision.DocumentSerialAssignmentHandlerForExclusive" />
+      <transition g="497,169;322,166:-45,-22" name="to 会签" to="${taskname}"/>
+      <transition g="-45,-22" name="to 执行" to="办公室"/>
+      <transition g="-57,-22" name="to 没通过" to="审批没通过"/>
+   </decision>
+   <task g="455,332,92,52" name="办公室" candidate-groups="officeGroups">
+      <transition g="-69,-22" name="to 文件下发" to="下发文件"/>
+   </task>
+   <end g="807,210,48,48" name="end1"/>
+   <task assignee="${begin_user}" g="603,209,92,52" name="审批没通过">
+      <transition g="-50,-22" name="to end1" to="end1"/>
+   </task>
+   <task g="610,330,92,52" name="下发文件">
+      <assignment-handler class="com.oa.jbpm.decision.DocumentAssignmentHandlerForIssued"/>
+      <transition g="-50,-22" name="to end1" to="end1"/>
+   </task>
+</process>
